@@ -1,8 +1,18 @@
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    dts({
+      tsconfigPath: 'tsconfig.build.json',
+      entryRoot: 'src',
+      outDir: 'dist',
+      insertTypesEntry: true,
+      rollupTypes: true,
+    }),
+  ],
   build: {
     lib: {
       entry: 'src/index.ts',

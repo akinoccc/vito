@@ -2,7 +2,7 @@
 import type { CrudField, UseCrudFormReturn } from '@uozi/vito-core'
 import type { DrawerContentProps, DrawerProps, FormInst, FormProps, ModalProps } from 'naive-ui'
 import { NButton, NDrawer, NDrawerContent, NForm, NFormItem, NModal, NSpace } from 'naive-ui'
-import { computed, h, ref, useSlots } from 'vue'
+import { computed, h, ref } from 'vue'
 import { componentMap, getFieldLabel, resolveControlProps, resolveFormItemProps } from '../adapter'
 
 export interface Props<Row> {
@@ -40,7 +40,7 @@ const emit = defineEmits<{
   (e: 'cancel'): void
 }>()
 
-const slots = useSlots()
+const slots = defineSlots<Record<string, any>>()
 const formRef = ref<FormInst | null>(null)
 
 const normalizedDisplayMode = computed<'modal' | 'drawer'>(() => {

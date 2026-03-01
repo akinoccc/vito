@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="Row, Query extends Record<string, unknown> = Record<string, unknown>">
+<script setup lang="ts">
 import type {
   ActionContext,
   CrudAction,
@@ -17,14 +17,17 @@ import {
   useCrudSelection,
 } from '@uozi/vito-core'
 import { NButton, NCard, NSpace } from 'naive-ui'
-import { computed, h, ref, useSlots } from 'vue'
+import { computed, h, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { confirmAction, handleExportResult } from '../adapter'
 import CrudForm from './CrudForm.vue'
 import CrudSearch from './CrudSearch.vue'
 import CrudTable from './CrudTable.vue'
 
-export interface Props<Row, Query extends Record<string, unknown> = Record<string, unknown>> {
+type Row = Record<string, any>
+type Query = Record<string, unknown>
+
+export interface Props {
   /** Data adapter */
   adapter: CrudAdapter<Row, Query>
   /** Field definitions */
@@ -69,7 +72,7 @@ export interface RowActionButtonProps<Row> {
   row: Row
 }
 
-const props = withDefaults(defineProps<Props<Row, Query>>(), {
+const props = withDefaults(defineProps<Props>(), {
   formMode: 'modal',
   showSelection: false,
   showActionsColumn: true,
@@ -88,7 +91,7 @@ const emit = defineEmits<{
   (e: 'error', error: unknown): void
 }>()
 
-const slots = useSlots()
+const slots = defineSlots<Record<string, any>>()
 
 // Build extra props for row-actions slot
 function getRowActionsSlotProps(row: Row) {

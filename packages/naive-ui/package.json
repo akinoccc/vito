@@ -18,20 +18,23 @@
     },
     "./vito-naive-ui.css": "./dist/vito-naive-ui.css"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": [
     "./dist/vito-naive-ui.css"
   ],
   "scripts": {
-    "build": "rimraf dist && vite build && tsc -p tsconfig.build.json"
+    "build": "rimraf dist && vite build"
   },
   "peerDependencies": {
-    "vue": "^3.4.0",
+    "@uozi/vito-core": "^0.1.1",
     "naive-ui": "^2.43.2",
-    "@uozi/vito-core": "^0.1.1"
+    "vue": "^3.4.0"
   },
   "devDependencies": {
     "@uozi/vito-core": "workspace:*",
+    "vite-plugin-dts": "^4.5.4",
     "vue-router": "^4.6.0"
   },
   "publishConfig": {
