@@ -243,6 +243,7 @@ export interface CrudAction<Row = any> {
   label: string
   icon?: any
   type?: 'primary' | 'default' | 'success' | 'warning' | 'error'
+  size?: 'tiny' | 'small' | 'medium' | 'large'
   area: 'toolbar' | 'row' | 'batch'
   order?: number
   confirm?: boolean | string

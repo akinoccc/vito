@@ -125,6 +125,7 @@ function renderControl(field: CrudField<Row>) {
         v-for="field in searchFields"
         :key="field.key"
         :label="getFieldLabel(field)"
+        :feedback-style="{ display: 'none' }"
         v-bind="resolveFormItemProps(field as any, 'searchForm')"
       >
         <slot
@@ -136,7 +137,10 @@ function renderControl(field: CrudField<Row>) {
         </slot>
       </NFormItem>
 
-      <NFormItem v-if="showSearch || showReset">
+      <NFormItem
+        v-if="showSearch || showReset"
+        :feedback-style="{ display: 'none' }"
+      >
         <NSpace>
           <NButton
             v-if="showSearch"
@@ -160,5 +164,11 @@ function renderControl(field: CrudField<Row>) {
 <style scoped>
 .crud-search {
   margin-bottom: 16px;
+}
+
+:deep(.n-form--inline) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 </style>

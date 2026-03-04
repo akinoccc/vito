@@ -52,6 +52,9 @@ export function useCrudActions<Row = any>(
 
 export interface CreateActionOptions {
   label?: string
+  size?: 'tiny' | 'small' | 'medium' | 'large'
+  type?: 'primary' | 'default' | 'success' | 'warning' | 'error'
+  order?: number
   onClick: () => void
 }
 
@@ -59,15 +62,19 @@ export function createAction(options: CreateActionOptions): CrudAction {
   return {
     id: 'create',
     label: options.label ?? '新增',
-    type: 'primary',
+    type: options.type ?? 'primary',
+    size: options.size ?? 'tiny',
     area: 'toolbar',
-    order: 0,
+    order: options.order ?? 0,
     onClick: options.onClick,
   }
 }
 
 export interface EditActionOptions<Row = any> {
   label?: string
+  size?: 'tiny' | 'small' | 'medium' | 'large'
+  type?: 'primary' | 'default' | 'success' | 'warning' | 'error'
+  order?: number
   onClick: (row: Row) => void
 }
 
@@ -75,9 +82,10 @@ export function editAction<Row = any>(options: EditActionOptions<Row>): CrudActi
   return {
     id: 'edit',
     label: options.label ?? '编辑',
-    type: 'default',
+    type: options.type ?? 'default',
+    size: options.size ?? 'tiny',
     area: 'row',
-    order: 0,
+    order: options.order ?? 0,
     onClick: (ctx) => {
       if (ctx.row) {
         options.onClick(ctx.row)
@@ -88,6 +96,9 @@ export function editAction<Row = any>(options: EditActionOptions<Row>): CrudActi
 
 export interface DeleteActionOptions<Row = any> {
   label?: string
+  size?: 'tiny' | 'small' | 'medium' | 'large'
+  type?: 'primary' | 'default' | 'success' | 'warning' | 'error'
+  order?: number
   adapter: CrudAdapter<Row>
   getId?: (row: Row) => string | number
   confirm?: boolean | string
@@ -101,9 +112,10 @@ export function deleteAction<Row = any>(options: DeleteActionOptions<Row>): Crud
   return {
     id: 'delete',
     label: options.label ?? '删除',
-    type: 'error',
+    type: options.type ?? 'error',
+    size: options.size ?? 'tiny',
     area: 'row',
-    order: 10,
+    order: options.order ?? 10,
     confirm: confirm === true ? '确定要删除此记录吗？' : confirm,
     onClick: async (ctx) => {
       if (!ctx.row || !adapter.remove)
@@ -124,6 +136,9 @@ export function deleteAction<Row = any>(options: DeleteActionOptions<Row>): Crud
 
 export interface BatchDeleteActionOptions<Row = any> {
   label?: string
+  size?: 'tiny' | 'small' | 'medium' | 'large'
+  type?: 'primary' | 'default' | 'success' | 'warning' | 'error'
+  order?: number
   adapter: CrudAdapter<Row>
   getId?: (row: Row) => string | number
   confirm?: boolean | string
@@ -137,9 +152,10 @@ export function batchDeleteAction<Row = any>(options: BatchDeleteActionOptions<R
   return {
     id: 'batchDelete',
     label: options.label ?? '批量删除',
-    type: 'error',
+    type: options.type ?? 'error',
+    size: options.size ?? 'tiny',
     area: 'batch',
-    order: 0,
+    order: options.order ?? 0,
     confirm: confirm === true ? '确定要删除选中的记录吗？' : confirm,
     visible: ctx => ctx.selectedIds.length > 0,
     onClick: async (ctx) => {
@@ -161,6 +177,9 @@ export function batchDeleteAction<Row = any>(options: BatchDeleteActionOptions<R
 
 export interface ExportActionOptions<Row = any> {
   label?: string
+  size?: 'tiny' | 'small' | 'medium' | 'large'
+  type?: 'primary' | 'default' | 'success' | 'warning' | 'error'
+  order?: number
   adapter: CrudAdapter<Row>
   filename?: string
   onSuccess?: () => void
@@ -175,9 +194,10 @@ export function exportAction<Row = any>(options: ExportActionOptions<Row>): Crud
   return {
     id: 'export',
     label: options.label ?? '导出',
-    type: 'default',
+    type: options.type ?? 'default',
+    size: options.size ?? 'tiny',
     area: 'toolbar',
-    order: 100,
+    order: options.order ?? 100,
     visible: () => typeof adapter.export === 'function',
     onClick: async (ctx) => {
       if (!adapter.export)

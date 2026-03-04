@@ -346,9 +346,10 @@ function renderActionButton(action: CrudAction<Row>, row?: Row) {
   return h(
     NButton,
     {
-      size: row ? 'small' : undefined,
-      type: action.type === 'primary' ? 'primary' : action.type === 'error' ? 'error' : undefined,
+      size: action.size ?? 'tiny',
+      type: action.type ?? 'primary',
       disabled: isDisabled,
+      tertiary: true,
       onClick: () => handleActionClick(action, row),
     },
     () => action.label,
