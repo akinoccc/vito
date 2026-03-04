@@ -24,8 +24,8 @@ import CrudForm from './CrudForm.vue'
 import CrudSearch from './CrudSearch.vue'
 import CrudTable from './CrudTable.vue'
 
-type Row = Record<string, any>
-type Query = Record<string, unknown>
+type Row = any
+type Query = any
 
 export interface Props {
   /** Data adapter */
@@ -68,8 +68,8 @@ export interface Props {
   routeQueryKey?: string
 }
 
-export interface RowActionButtonProps<Row> {
-  row: Row
+export interface RowActionButtonProps<TRow> {
+  row: TRow
 }
 
 const props = withDefaults(defineProps<Props>(), {
