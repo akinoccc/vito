@@ -191,7 +191,7 @@ function buildActionContext(row?: Row): ActionContext<Row> {
     row,
     selectedRows: selection.selectedRows.value,
     selectedIds: [...selection.selectedIds.value],
-    query: (list.query.value ?? {}) as any,
+    query: list.query.value ?? {},
     sort: list.sort.value,
     page: list.page.value,
     pageSize: list.pageSize.value,
@@ -232,7 +232,7 @@ const defaultActions = computed<CrudAction<Row>[]>(() => {
   // Delete action
   if (!props.disableDelete && props.adapter.remove) {
     actions.push(presetActions.delete({
-      adapter: props.adapter as any,
+      adapter: props.adapter,
       getId: props.adapter.getId,
       onError: err => emit('error', err),
     }))
@@ -241,7 +241,7 @@ const defaultActions = computed<CrudAction<Row>[]>(() => {
   // Export action
   if (!props.disableExport && props.adapter.export) {
     actions.push(presetActions.export({
-      adapter: props.adapter as any,
+      adapter: props.adapter,
       handleExport: handleExportResult,
       onError: err => emit('error', err),
     }))
@@ -311,13 +311,19 @@ const effectiveColumns = computed<CrudColumn<Row>[]>(() => {
 
 // Row key getter
 const rowKey = computed(() => {
-  return props.adapter.getId ?? ((row: Row) => (row as any).id)
+  return props.adapter.getId ?? ((row: Row) => row.id)
 })
 
 // Handle form submit
 async function handleFormSubmit(data: Partial<Row>) {
   const mode = form.mode.value
   emit('submit', { mode, data })
+
+  // If no data, close form directly
+  if (Object.keys(data).length === 0) {
+    formVisible.value = false
+    return
+  }
 
   try {
     if (mode === 'create' && props.adapter.create) {
@@ -346,7 +352,7 @@ function renderActionButton(action: CrudAction<Row>, row?: Row) {
   return h(
     NButton,
     {
-      size: action.size ?? 'tiny',
+      size: action.size ?? 'small',
       type: action.type ?? 'primary',
       disabled: isDisabled,
       tertiary: true,
